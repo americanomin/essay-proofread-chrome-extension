@@ -4,7 +4,7 @@
   "description": "Analyze and suggest improvements for essay using OpenAI's API",
   "manifest_version": 3,
   "permissions": [
-    "tabs",
+    "activeTab",
     "storage"
   ],
   "host_permissions": [
@@ -12,7 +12,13 @@
     "https://*.tistory.com/*"
   ],
   "action": {
-    "default_popup": "options.html"
+    "default_icon": {
+      "128": "images/icon_128.png",
+      "16": "images/icon_16.png",
+      "32": "images/icon_32.png",
+      "48": "images/icon_48.png"
+    },
+    "default_popup": "popup.html"
   },
   "content_scripts": [
     {
@@ -20,11 +26,23 @@
         "https://*.tistory.com/*"
       ],
       "js": [
-        "content-script.js"
+        "content.js"
       ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*"],
+      "matches": ["<all_urls>"]
     }
   ],
   "background": {
     "service_worker": "background.js"
+  },
+  "icons": {
+    "128": "images/icon_128.png",
+    "16": "images/icon_16.png",
+    "32": "images/icon_32.png",
+    "48": "images/icon_48.png"
   }
 }
