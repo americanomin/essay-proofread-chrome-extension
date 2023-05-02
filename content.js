@@ -5,15 +5,20 @@ const keysWithDefault = [
 let lastComment = null;
 
 document.addEventListener('mouseup', function(event) {
-  console.log("mouseup");
   var selectedText = window.getSelection().toString().trim();
+  console.log(selectedText);
   if (selectedText !== '') {
     var icon = document.createElement('img');
     icon.src = chrome.runtime.getURL('images/icon_32.png');
     icon.id = 'myIcon';
-    icon.style.position = 'fixed';
-    icon.style.left = event.pageX + 'px';
-    icon.style.top = event.pageY + 'px';
+//    icon.style.position = 'absolute';
+
+    // 드래그한 텍스트의 위치를 파악하여 아이콘 이미지 위치를 조정합니다.
+    var range = window.getSelection().getRangeAt(0);
+    var rect = range.getBoundingClientRect();
+    icon.style.left = rect.right + 'px';
+    icon.style.top = rect.top + 'px';
+
     icon.addEventListener('click', function() {
         icon.remove();
 
@@ -26,7 +31,9 @@ document.addEventListener('mouseup', function(event) {
 
         document.body.appendChild(tooltip);
     });
-    document.body.appendChild(icon);
+    console.log(icon)
+    // 아이콘 이미지를 텍스트 옆에 위치시킵니다.
+    range.insertNode(icon);
   }
 });
 
